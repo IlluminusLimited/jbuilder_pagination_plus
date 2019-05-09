@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "Jbuilder extension to allows pagination according to JSON API format"
   spec.description = "Jbuilder extension to allows pagination according to JSON API format. See http://jsonapi.org for details on the format. Also provides methods for simpler pagination in controllers"
-  spec.homepage = "https://github.com/PinsterTeam/jbuilder_pagination_plus"
+  spec.homepage = "https://github.com/IlluminusLimited/jbuilder_pagination_plus"
   spec.license = "MIT"
 
   spec.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
