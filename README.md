@@ -1,12 +1,15 @@
 # Jbuilder Pagination Plus [![Build Status](https://travis-ci.org/PinsterTeam/jbuilder_pagination_plus.svg?branch=master)](https://travis-ci.org/PinsterTeam/jbuilder_pagination_plus) [![Gem Version](https://badge.fury.io/rb/jbuilder_pagination_plus.svg)](https://badge.fury.io/rb/jbuilder_pagination_plus)
 
-[Jbuilder](https://github.com/rails/jbuilder) extension that makes easier to use pagination according to the [JSON API](http://jsonapi.org/format/#fetching-pagination) conventions.
+[Jbuilder](https://github.com/rails/jbuilder) extension that makes easier to use pagination according 
+to the [JSON API](http://jsonapi.org/format/#fetching-pagination) conventions.
 
 Forked from: [https://github.com/bacarini/jbuilder_pagination](https://github.com/bacarini/jbuilder_pagination)
 
 ## Requirement
 
-`JbuilderPaginationPlus` relies on a paginated collection with the methods `current_page`, `total_pages`, and `size`, such as are supported by both [Kaminari](https://github.com/amatsuda/kaminari) or [WillPaginate](https://github.com/mislav/will_paginate).
+`JbuilderPaginationPlus` relies on a paginated collection with the methods `current_page`, `total_pages`, 
+and `size`, such as are supported by both [Kaminari](https://github.com/amatsuda/kaminari) 
+or [WillPaginate](https://github.com/mislav/will_paginate).
 
 ## Installation
 
@@ -79,13 +82,28 @@ end
 #    } 
 # }  
 ```
-The options `url` and  `query_parameters` are opcionals.
+The options `url` and  `query_parameters` are optional.
 
 In case there is no pagination at all, `links` will be omitted.
 
+If you want to keep the original query parameters passed in you could do something this: 
+
+```ruby
+json.links do
+  json.pages! @posts, url: request.original_url, query_parameters: { images: params[:images] }
+end
+
+json.data do
+  # Whatever your data is
+end
+```
+
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. 
+Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To run tests, run `rake spec`
 
 ## Contributing
 
