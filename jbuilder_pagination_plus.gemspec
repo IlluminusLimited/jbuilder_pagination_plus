@@ -19,8 +19,9 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency 'jbuilder', '~> 2.2', '>= 2.2.0'
-  spec.add_development_dependency 'rspec', '~> 3.2', '>= 3.2.0'
-  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_runtime_dependency 'rack', '~> 2.0', '>= 2.0.0'
+  spec.add_runtime_dependency 'jbuilder', '~> 2.8', '>= 2.8.0'
+  spec.add_development_dependency 'rspec', '~> 3.8', '>= 3.8.0'
+  spec.add_development_dependency 'rake', '~> 12.0', '>= 12.0.0'
   spec.add_development_dependency 'pry', '~> 0'
 end

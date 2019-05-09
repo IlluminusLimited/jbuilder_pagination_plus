@@ -16,7 +16,7 @@ describe 'Jbuilder#Pagination' do
   context 'pagination raises error on unpageable resource' do
     it('actually works') do
       test_pagers = [[:page, ->(params) { params }]]
-      expect{paginate({ not: :pageable }, test_pagers, page: { size: 2 })}.to(
+      expect { paginate({ not: :pageable }, test_pagers, page: { size: 2 }) }.to(
           raise_error(Pagination::Errors::UnpageableResourceError))
     end
   end

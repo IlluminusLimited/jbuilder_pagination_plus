@@ -1,5 +1,6 @@
-require "jbuilder"
-require "jbuilder/pagination/pages"
+require 'rack/utils'
+require 'jbuilder'
+require 'jbuilder/pagination/pages'
 require 'jbuilder/pagination/exceptions/unpageable_resource_error'
 
 module Pagination
