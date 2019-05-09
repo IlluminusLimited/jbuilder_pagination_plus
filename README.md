@@ -98,6 +98,21 @@ json.data do
 end
 ```
 
+jbuilder_pagination_plus will deep merge query parameters with the original request parameters.
+
+
+If that's not what you need then you can get the url using rails helpers:
+
+```ruby
+json.links do
+  json.pages! @posts, url: posts_url
+end
+
+json.data do
+  # Whatever your data is
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. 
