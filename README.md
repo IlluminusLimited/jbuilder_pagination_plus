@@ -113,6 +113,23 @@ json.data do
 end
 ```
 
+If you need pagination but don't want the performance penalty of counting all of the records, you can use
+to generate links without generating a `last` url. This should be compatible with `Kaminari`'s
+ `without_count` scope which can be used to paginate without issuing a `COUNT(*)` query.
+
+```ruby
+json.links do
+  json.pages_no_count! @posts, url: posts_url
+end
+
+json.data do
+  # Whatever your data is
+end
+```
+
+The `pages!` method will automatically switch to `no_count` mode if it detects that the collection
+doesn't respond properly to a `total_pages` method call.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. 
