@@ -58,13 +58,13 @@ describe 'Jbuilder#pages!' do
     let(:collection) { OpenStruct.new(current_page: 2, total_pages: 4, size: 1) }
     let(:response_json) {
       {
-          links: {
-              self: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=2&page%5Bsize%5D=1",
-              first: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=1&page%5Bsize%5D=1",
-              prev: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=1&page%5Bsize%5D=1",
-              next: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=3&page%5Bsize%5D=1",
-              last: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=4&page%5Bsize%5D=1"
-          }
+        links: {
+          self: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=2&page%5Bsize%5D=1",
+          first: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=1&page%5Bsize%5D=1",
+          prev: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=1&page%5Bsize%5D=1",
+          next: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=3&page%5Bsize%5D=1",
+          last: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=4&page%5Bsize%5D=1"
+        }
       }.to_json
     }
 
@@ -79,6 +79,48 @@ describe 'Jbuilder#pages!' do
     let(:collection) { OpenStruct.new(current_page: 1, total_pages: 1) }
 
     it { expect(build_json_for(collection)).to eq("{}") }
+  end
+
+  context 'when total_pages raises an error it gets skipped' do
+    let(:collection) { NonCountable.new }
+    let(:response_json) {
+      {
+        links: {
+          self: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=2&page%5Bsize%5D=1",
+          first: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=1&page%5Bsize%5D=1",
+          prev: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=1&page%5Bsize%5D=1",
+          next: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=3&page%5Bsize%5D=1",
+        }
+      }.to_json
+    }
+
+    it { expect(build_json_for(collection, original_params: '?page%5Bnumber%5D=2&page%5Bsize%5D=1&bob=lob')).to eq(response_json) }
+  end
+
+  context 'non_counted resources work' do
+    let(:collection) { NonCountable.new }
+    let(:response_json) {
+      {
+        links: {
+          self: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=2&page%5Bsize%5D=1",
+          first: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=1&page%5Bsize%5D=1",
+          prev: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=1&page%5Bsize%5D=1",
+          next: "https://api.example.com/v1/servers?bob=lob&page%5Bnumber%5D=3&page%5Bsize%5D=1",
+        }
+      }.to_json
+    }
+
+    it { expect(build_non_counted_json_for(collection, original_params: '?page%5Bnumber%5D=2&page%5Bsize%5D=1&bob=lob')).to eq(response_json) }
+  end
+
+  def build_non_counted_json_for(collection, options = {})
+    Jbuilder.encode do |json|
+      json.links do
+        json.pages_no_count! collection,
+                    url: "https://api.example.com/v1/servers" + options.fetch(:original_params, ''),
+                    query_parameters: options.fetch(:query_parameters, {})
+      end
+    end
   end
 
   def build_json_for(collection, options = {})
@@ -109,5 +151,19 @@ describe 'Jbuilder#pages!' do
                     query_parameters: { some_key: nil }
       end
     end
+  end
+end
+
+class NonCountable
+  def current_page
+    2
+  end
+
+  def size
+    1
+  end
+
+  def total_pages
+    raise "Nope"
   end
 end

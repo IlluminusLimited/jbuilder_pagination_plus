@@ -5,7 +5,7 @@ require 'jbuilder/pagination/version'
 
 Gem::Specification.new do |spec|
   spec.name = "jbuilder_pagination_plus"
-  spec.version = Jbuilder::Pagination::VERSION
+  spec.version = Pagination::VERSION
   spec.authors = ["Bruno Bacarini", "Andrew Newell"]
   spec.email = ["bacarini.bruno@gmail.com", "scytherswings@gmail.com"]
 

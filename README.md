@@ -1,4 +1,4 @@
-# Jbuilder Pagination Plus [![Build Status](https://travis-ci.org/PinsterTeam/jbuilder_pagination_plus.svg?branch=master)](https://travis-ci.org/PinsterTeam/jbuilder_pagination_plus) [![Gem Version](https://badge.fury.io/rb/jbuilder_pagination_plus.svg)](https://badge.fury.io/rb/jbuilder_pagination_plus)
+# Jbuilder Pagination Plus [![Build Status](https://travis-ci.org/IlluminusLimited/jbuilder_pagination_plus.svg?branch=master)](https://travis-ci.org/IlluminusLimited/jbuilder_pagination_plus) [![Gem Version](https://badge.fury.io/rb/jbuilder_pagination_plus.svg)](https://badge.fury.io/rb/jbuilder_pagination_plus)
 
 [Jbuilder](https://github.com/rails/jbuilder) extension that makes easier to use pagination according 
 to the [JSON API](http://jsonapi.org/format/#fetching-pagination) conventions.
@@ -112,6 +112,23 @@ json.data do
   # Whatever your data is
 end
 ```
+
+If you need pagination but don't want the performance penalty of counting all of the records, you can use
+to generate links without generating a `last` url. This should be compatible with `Kaminari`'s
+ `without_count` scope which can be used to paginate without issuing a `COUNT(*)` query.
+
+```ruby
+json.links do
+  json.pages_no_count! @posts, url: posts_url
+end
+
+json.data do
+  # Whatever your data is
+end
+```
+
+The `pages!` method will automatically switch to `no_count` mode if it detects that the collection
+doesn't respond properly to a `total_pages` method call.
 
 ## Development
 
