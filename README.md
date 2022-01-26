@@ -5,6 +5,11 @@ to the [JSON API](http://jsonapi.org/format/#fetching-pagination) conventions.
 
 Forked from: [https://github.com/bacarini/jbuilder_pagination](https://github.com/bacarini/jbuilder_pagination)
 
+
+## Maintenance Status
+
+This gem is actively used in production and is stable. If you have any issues please feel free to open them!
+
 ## Requirement
 
 `JbuilderPaginationPlus` relies on a paginated collection with the methods `current_page`, `total_pages`, 
